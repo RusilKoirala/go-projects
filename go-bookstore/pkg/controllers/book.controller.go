@@ -11,7 +11,7 @@ import (
 	"gorm.io/gorm"
 )
 
-// Just made same thing
+var NewBook models.Book
 var db *gorm.DB
 
 func init() {
@@ -62,34 +62,8 @@ func CreateBook(w http.ResponseWriter, r *http.Request) {
 }
 
 func UpdateBook(w http.ResponseWriter, r *http.Request) {
-	var book models.Book
-
-	vars := mux.Vars(r)
-	id := vars["id"]
-
-	err := utils.ParseBody(r, &book)
-	if err != nil {
-		utils.WriteJSONError(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	err = models.UpdateBook(db, &book, id)
-	if err != nil {
-		utils.WriteJSONError(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	utils.SendSuccess(w, "Done", http.StatusOK)
 
 }
 func DeleteBook(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	id := vars["id"]
 
-	err := models.DeleteBook(db, id)
-	if err != nil {
-		utils.WriteJSONError(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-	utils.SendSuccess(w, "Data is successfully deleted", http.StatusOK)
 }

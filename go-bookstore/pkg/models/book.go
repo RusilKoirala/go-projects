@@ -5,8 +5,10 @@ import (
 	"gorm.io/gorm"
 )
 
+// Database variable
 var db *gorm.DB
 
+// Book Structure
 type Book struct {
 	gorm.Model
 	Name        string `gorm:"column:name"json:"name"`
@@ -14,12 +16,14 @@ type Book struct {
 	Publication string `json:"publication"`
 }
 
+// Initializaiton
 func init() {
 	config.ConnectDB()
 	db = config.GetDb()
 	db.AutoMigrate(&Book{})
 }
 
+// CRUD operations
 func CreateBook(db *gorm.DB, b *Book) error {
 	return db.Create(b).Error
 }
